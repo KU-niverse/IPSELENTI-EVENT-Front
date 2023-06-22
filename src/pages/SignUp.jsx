@@ -89,13 +89,14 @@ function SignUp() {
             if (response.status === 201) {
                 setLoggedIn(true);
                 Navigate('/signup/completed');
-            } else if(response.status === 409){
-                return alert(response.data.message);
-            } else if(response.status === 422) {
-                return alert(response.data.message);
             }
         } catch (error) {
             console.error(error);
+            if(error.response.status === 409){
+                return alert("중복된 정보가 존재합니다.");
+            } else if(error.response.status === 422) {
+                return alert("추천인이 존재하지 않습니다.");
+            }
         }
     
     }
@@ -211,6 +212,7 @@ function SignUp() {
                                 />
                                 <span className='spans'>상품 수령 시 필요한 정보이니 정확하게 기입해주세요.</span>
                                 <span className={checkPhoneNum ? 'spans' : 'hidden'}>전화번호를 제대로 입력해주세요</span>
+                                <span className='spans'>이벤트가 종료된 뒤 모든 개인정보는 폐기됩니다.</span>
                             </div>
                         </div>
                     </form>
